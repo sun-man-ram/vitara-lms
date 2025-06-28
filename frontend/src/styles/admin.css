@@ -1,0 +1,371 @@
+/* admin.css - Complete Styles */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #f9f9f9;
+}
+h1{
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+/* Top Bar */
+.top-bar {
+  background: linear-gradient(to right, #764ba2, #667eea);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.top-bar .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+  height: 1cm;
+  padding: 0cm;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.logo span {
+  color: #ffd700;
+}
+
+.header-button {
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  margin-left: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-button i {
+  font-size: 1.2rem;
+}
+
+.username {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.profile-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  min-width: 180px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  z-index: 999;
+}
+
+.dropdown-menu a {
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #ddd;
+  display: block;
+}
+
+.dropdown-menu a:last-child {
+  border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+  background-color: rgba(118, 75, 162, 0.1);
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 60px);
+  background: #fff;
+  border-right: 1px solid #ddd;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  z-index: 900;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+.sidebar .toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+  color: #764ba2;
+  font-size: 1.2rem;
+  background: #f5f5f5;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.sidebar ul li a:hover {
+  background: rgba(118, 75, 162, 0.1);
+}
+
+.sidebar ul li a i {
+  font-size: 1.2rem;
+  margin-right: 15px;
+  min-width: 25px;
+  text-align: center;
+  color: #764ba2;
+}
+
+.sidebar.collapsed ul li a span {
+  display: none;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin-left 0.3s;
+  margin-top: 60px;
+}
+
+.sidebar.collapsed ~ .main-content {
+  margin-left: 70px;
+}
+
+.title-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 320px;
+}
+
+.title-card {
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.title-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+}
+
+.title-card.school-registration {
+  background: linear-gradient(135deg, #ff6f61, #ff9472);
+}
+
+.title-card.examinations {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+}
+
+.title-card.results {
+  background: linear-gradient(135deg, #8e2de2, #4a00e0);
+}
+
+/* Calendar */
+.calendar-toggle-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1001;
+  background: #764ba2;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.calendar {
+  display: none;
+  position: fixed;
+  bottom: 90px;
+  right: 25px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 12px;
+  padding: 20px;
+  width: 400px;
+  font-family: Arial, sans-serif;
+  z-index: 1000;
+}
+
+.calendar.active {
+  display: block;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.calendar-header select {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #764ba2;
+  margin-bottom: 6px;
+  width: 100%;
+}
+
+.calendar-header select:focus {
+  outline: none;
+  border-color: #764ba2;
+}
+
+.calendar-header .nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.calendar-header button {
+  background-color: #764ba2;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  width: 36px;
+  height: 36px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.calendar-header button:hover {
+  background-color: #5e3c9e;
+}
+
+.calendar-header h3 {
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  color: #764ba2;
+  margin: 0 10px;
+}
+
+.calendar table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.calendar th {
+  color: #764ba2;
+  font-size: 0.9rem;
+  padding-bottom: 8px;
+}
+
+.calendar td {
+  padding: 8px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: default;
+  transition: background 0.2s;
+}
+
+.calendar .today {
+  background-color: #764ba2;
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.calendar .sunday {
+  color: red;
+  font-weight: bold;
+}
+
+.calendar .holiday {
+  background-color: #ffe0e0;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    left: -250px;
+  }
+  .sidebar.open {
+    left: 0;
+  }
+  .main-content {
+    margin-left: 0;
+  }
+  .calendar {
+    width: 95%;
+    right: 2.5%;
+    bottom: auto;
+    top: 100px;
+  }
+}

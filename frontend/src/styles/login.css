@@ -1,0 +1,65 @@
+.login-page {
+  background: url('https://www.forbes.com/advisor/wp-content/uploads/2021/06/lms_learning_management_systems.jpeg.jpg') no-repeat center center/cover;
+  min-height: 100vh;
+  padding-top: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  width: 90%;
+}
+
+.login-form h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #333, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #764ba2;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 12px;
+  background: #764ba2;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #5a3673;
+}
