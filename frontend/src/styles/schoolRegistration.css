@@ -1,0 +1,451 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #f9f9f9;
+}
+
+/* Header Bar */
+.top-bar {
+  background: linear-gradient(to right, #764ba2, #667eea);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #ddd;
+}
+
+.top-bar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #ffd700;
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.profile-button i {
+  font-size: 1.2rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  min-width: 180px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  flex-direction: column;
+  z-index: 999;
+}
+
+.dropdown-menu a {
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  display: flex; /* Optional: only if your dropdown layout depends on flex */
+}
+
+
+.dropdown-menu a:hover {
+  background-color: rgba(118, 75, 162, 0.1);
+}
+
+
+/* Main Layout */
+main {
+  padding: 80px 20px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Form */
+form input,
+form select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background: #764ba2;
+  color: white;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #5e3d92;
+}
+
+/* Credentials Section */
+#credentialsSection {
+  margin-top: 20px;
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-left: 4px solid #764ba2;
+  display: none;
+}
+
+#credentialsSection p {
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+#credentialsSection span {
+  font-weight: bold;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Users Table */
+#usersTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+}
+
+#usersTable th,
+#usersTable td {
+  padding: 12px 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+#usersTable th {
+  background-color: #004080;
+  color: white;
+}
+
+#usersTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Buttons */
+.btn {
+  font-size: 14px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btn-info:hover {
+  opacity: 0.9;
+}
+
+/* Export Buttons */
+.export-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.export-buttons .btn-export {
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-pdf {
+  background: linear-gradient(to right, #dc3545, #c82333);
+}
+
+.btn-pdf:hover {
+  background: linear-gradient(to right, #c82333, #bd2130);
+}
+
+.btn-excel {
+  background: linear-gradient(to right, #28a745, #218838);
+}
+
+.btn-excel:hover {
+  background: linear-gradient(to right, #218838, #1e7e34);
+}
+
+/* Upload & Search */
+#excelUpload,
+#schoolCodeSearch {
+  padding: 8px 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Excel Header (like image) */
+.excel-header {
+  background-color: #6f42c1;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 12px 25px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .top-bar .container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .export-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dropdown-menu {
+    right: auto;
+    left: 0;
+  }
+}
+
+
+.custom-status-dropdown {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+  min-width: 150px;
+  padding: 0.5rem 0;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-status-dropdown.show {
+  display: block;
+}
+
+.custom-status-dropdown .dropdown-item {
+  padding: 0.4rem 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.custom-status-dropdown .dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+
+.custom-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.custom-dropdown-toggle {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 14px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.custom-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 999;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  min-width: 150px;
+  padding: 8px 0;
+}
+
+.custom-dropdown-menu a {
+  display: block;
+  padding: 10px 16px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.custom-dropdown-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+.badge {
+  padding: 0.4em 0.6em;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.badge-success {
+  background-color: #28a745;
+  color: #fff;
+}
+.badge-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.custom-dropdown-toggle {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.custom-dropdown-toggle:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-warning {
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: none; /* Redundant but safe */
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  font-family: 'Material Symbols Outlined';
+  position: absolute;
+  top: 38px;
+  right: 15px;
+  cursor: pointer;
+  user-select: none;
+  color: #888;
+}
+
+/* Chrome, Edge, Brave, Opera */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+  pointer-events: none;
+  appearance: none;
+}
+
+input::-ms-reveal {
+  display: none;
+}
+
+input[type="password"]::-webkit-inner-spin-button,
+input[type="password"]::-webkit-outer-spin-button {
+  display: none;
+}
+
+input[type="password"] {
+  /* Prevent native icon from overlapping */
+  padding-right: 40px; /* Adjust if needed */
+}
+
+
+/* Fix modal padding flicker */
+body.modal-open {
+  padding-right: 0 !important;
+  overflow: hidden;
+}
+
+/* Ensure header is stable and above modal backdrop */
+.top-bar {
+  position: relative;
+  z-index: 1050; /* Make sure header stays on top */
+}
+
+
+body.modal-open {
+  overflow: hidden !important;
+  padding-right: 0 !important;
+}
+
+.modal {
+  transform: translateZ(0); /* Force hardware acceleration */
+}

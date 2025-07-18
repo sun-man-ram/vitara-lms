@@ -1,3 +1,7 @@
+body{
+  place-items: normal;
+}
+
 .login-page {
   background: url('https://www.forbes.com/advisor/wp-content/uploads/2021/06/lms_learning_management_systems.jpeg.jpg') no-repeat center center/cover;
   min-height: 100vh;

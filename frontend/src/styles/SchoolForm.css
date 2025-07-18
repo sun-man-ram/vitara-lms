@@ -1,0 +1,50 @@
+/* Inline form row styling */
+.form-row-inline {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+/* Labels have a fixed width */
+.form-row-inline label {
+  width: 180px; /* Adjust as needed */
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Inputs and selects fill the remaining space */
+.form-row-inline input,
+.form-row-inline select {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-bottom: 0; /* Already using gap for spacing */
+}
+
+/* Buttons for copy and others */
+form button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background: #764ba2;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+form button:hover {
+  background: #5e3d92;
+}
+
+/* For the submit row, align buttons to the right */
+.form-row-inline.submit-row {
+  justify-content: flex-end;
+}
+
+/* Add a small left margin between buttons in the submit row */
+.form-row-inline.submit-row button + button {
+  margin-left: 10px;
+}
