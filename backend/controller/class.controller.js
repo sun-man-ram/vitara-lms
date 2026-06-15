@@ -110,3 +110,18 @@ export const getClassesBySchoolId = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch classes' });
   }
 };
+
+export const getClassByClassId = async (req, res) => {
+  try {
+    const classItem = await Class.findOne({ classId: req.params.id }); // ✅ query by classId
+
+    if (!classItem) {
+      return res.status(404).json({ message: "Class not found" });
+    }
+
+    res.status(200).json(classItem);
+  } catch (error) {
+    console.error("❌ Error in getClassByClassId:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

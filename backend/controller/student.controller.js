@@ -6,6 +6,13 @@ import User from '../models/users.model.js';
 import { generatePassword } from '../utils/passwordGenerator.js';
 import { encryptPassword } from '../utils/encryption.js';
 import { decryptPassword } from '../utils/encryption.js';
+// controller/result.controller.js
+import {ResultMBiPC} from '../models/resultMBiPC.model.js';
+import {ResultMPC} from '../models/resultMPC.model.js';
+import {ResultMPCAdvanced} from '../models/resultMPCAdvanced.model.js';
+import {ResultMBiPCAdvanced} from '../models/resultMBiPCAdvanced.model.js';
+import { Exam } from "../models/exam.model.js";
+
 
 export const getStudentsByFilter = async (req, res) => {
   try {
@@ -170,5 +177,207 @@ export const bulkRegisterStudents = async (req, res) => {
   } catch (err) {
     console.error('Bulk register error:', err);
     res.status(500).json({ message: err.message || 'Internal server error' });
+  }
+};
+
+
+// controller/student.controller.js
+export const getStudentProfile = async (req, res) => {
+  const { studentId } = req.params;
+  try {
+    const student = await Student.findOne({ studentId }).populate('classId');
+    if (!student) return res.status(404).json({ message: "Student not found" });
+    res.status(200).json(student);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
+export const getStudentResults = async (req, res) => {
+  const studentId = req.user.username;
+  const examId = req.query.examId;
+
+  try {
+    if (!examId) {
+      return res.status(400).json({ message: 'Missing examId' });
+    }
+
+    // Fetch the exam to determine if it's advanced or not
+    const exam = await Exam.findOne({ examId });
+    if (!exam) {
+      return res.status(404).json({ message: 'Exam not found' });
+    }
+
+    const type = exam.type; // 'mains' or 'advanced'
+    const course = exam.course;
+
+    let ResultModel;
+
+    if (/MPC/i.test(course)) {
+      ResultModel = type === 'advanced' ? ResultMPCAdvanced : ResultMPC;
+    } else if (/MBiPC/i.test(course)) {
+      ResultModel = type === 'advanced' ? ResultMBiPCAdvanced : ResultMBiPC;
+    } else {
+      return res.status(400).json({ message: 'Unsupported course type' });
+    }
+
+    const result = await ResultModel.findOne({
+      studentId,
+      examId,
+      status: 'result updated'
+    });
+
+    if (!result) {
+      return res.status(404).json({ message: 'Result not found' });
+    }
+
+    res.status(200).json(result);
+
+  } catch (err) {
+    console.error('🔥 Error fetching result:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+// controllers/exam.controller.js
+
+
+export const getUpcomingExamsForStudent = async (req, res) => {
+  const { studentId } = req.params;
+
+  try {
+    const student = await Student.findOne({ studentId });
+    if (!student) return res.status(404).json({ msg: "Student not found" });
+
+    const classDoc = await Class.findOne({ classId: student.classId });
+    if (!classDoc) return res.status(404).json({ msg: "Class not found" });
+
+    const course = classDoc.course;
+    const today = new Date();
+
+    const exams = await Exam.find({
+      course: course,
+      date: { $gte: today }
+    }).sort({ date: 1 });
+
+    res.status(200).json(exams);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Error fetching upcoming exams" });
+  }
+};
+export const getStudentProfilee = async (req, res) => {
+  try {
+    const tokenData = req.user; // from authenticateUser
+    const student = await Student.findOne({ studentId: tokenData.username });
+
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    // Use classId as a custom ID, not MongoDB _id
+    const classInfo = await Class.findOne({ classId: student.classId });
+
+    return res.status(200).json({
+      studentId: student.studentId,
+      studentName: student.studentName,
+      schoolId: student.schoolId,
+      classId: student.classId,
+      className: classInfo?.className,
+      section: classInfo?.section,
+      course: classInfo?.course,
+    });
+  } catch (err) {
+    console.error("🔥 getStudentProfilee error:", err);
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+
+export const getStudentOverview = async (req, res) => {
+  try {
+    const studentId = req.user.username;
+
+    // 1. Get student
+    const student = await Student.findOne({ studentId });
+    if (!student) return res.status(404).json({ error: 'Student not found' });
+
+    // 2. Get class info to know the course
+    const classInfo = await Class.findOne({ classId: student.classId });
+    if (!classInfo) return res.status(404).json({ error: 'Class not found' });
+
+    const course = classInfo.course;
+
+    // 3. Get all examIds for this course
+    const exams = await Exam.find({ course });
+    const overviewResults = [];
+
+    for (const exam of exams) {
+      let ResultModel;
+
+      if (/MPC/i.test(course)) {
+        ResultModel = exam.type === 'advanced' ? ResultMPCAdvanced : ResultMPC;
+      } else if (/MBiPC/i.test(course)) {
+        ResultModel = exam.type === 'advanced' ? ResultMBiPCAdvanced : ResultMBiPC;
+      } else {
+        continue;
+      }
+
+      const result = await ResultModel.findOne({
+        studentId,
+        examId: exam.examId,
+        status: 'result updated'
+      });
+
+      if (result) {
+        overviewResults.push(result);
+      }
+    }
+
+    // No valid results
+    if (overviewResults.length === 0) {
+      return res.json({
+        totalTests: 0,
+        averageScore: 0,
+        bestSubject: '-',
+        weakestSubject: '-',
+      });
+    }
+
+    // Aggregate results
+    let totalScore = 0;
+    const subjectTotals = {};
+
+    overviewResults.forEach(result => {
+      totalScore += result.total;
+
+      for (const [subject, mark] of Object.entries(result.marks)) {
+        if (!subjectTotals[subject]) subjectTotals[subject] = [];
+        subjectTotals[subject].push(mark);
+      }
+    });
+
+    const averageScore = (totalScore / overviewResults.length).toFixed(2);
+
+    const subjectAverages = Object.entries(subjectTotals).map(([subject, marks]) => ({
+      subject,
+      average: marks.reduce((a, b) => a + b, 0) / marks.length,
+    }));
+
+    subjectAverages.sort((a, b) => b.average - a.average);
+
+    res.json({
+      totalTests: overviewResults.length,
+      averageScore,
+      bestSubject: subjectAverages[0]?.subject || '-',
+      weakestSubject: subjectAverages[subjectAverages.length - 1]?.subject || '-',
+    });
+
+  } catch (error) {
+    console.error("❌ Error in getStudentOverview:", error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
